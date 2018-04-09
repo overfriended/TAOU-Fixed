@@ -36,7 +36,6 @@ client.on('message', message => {
   if (message.author.id === client.user.id || message.author.bot) return;
   if (message.isMentioned("212789715378765825") || message.mentions.everyone || (message.guild && message.mentions.roles.filter(r => message.guild.member("146048938242211840").roles.has(r.id)).size > 0)) {
       if (message.author.id === "212789715378765825") return;
-      // Additional Code
       mentionHook.send("You were mentioned!");
   }
   let args = message.content.slice(prefix.length).trim().split(/ +/g);
@@ -46,7 +45,7 @@ client.on('message', message => {
     if (!message.content.startsWith(prefix)) return; // if the message doesn't contain PREFIX (*), then ignore
     var mutedrole = message.guild.roles.find("name", "muted");
 
-    if (command == "help") { // creates a command *help
+    if (command == "help") { 
         var embedhelpmember = new Discord.RichEmbed() // sets a embed box to the variable embedhelpmember
             .setTitle("**List of Commands**\n") // sets the title to List of Commands
             .addField(" - help", `Displays this message (Correct usage: ${prefix}help)`) // sets the first field to explain the command *help
@@ -69,33 +68,33 @@ client.on('message', message => {
         if(message.member.roles.some(r=>["bot-admin"].includes(r.name)) || message.member.hasPermission("ADMINISTRATOR")) return message.channel.send(embedhelpadmin); // if member is a botadmin, display this too
     }
 
-    if (command == "info") { // creates the command *info
+    if (command == "info") { 
         message.channel.send(`Hey! My name is <@${client.user.id}> or ${client.user.username}. My id is ${client.user.id}. My entire tag is ${client.user.tag}. I was born on ${client.user.createdAt}.`) // gives u info
     }
 
-    if (command == "ping") { // creates a command *ping
+    if (command == "ping") {
         message.channel.send(`Pong! \`${client.pings[0]}ms\``); // answers with "Pong!"
     }
 
-    if (command == "cookie") { // creates the command cookie
+    if (command == "cookie") {
         if (args[1]) message.channel.send(message.author.toString() + " has given " + args[1].toString() + " a cookie! :cookie:") // sends the message saying someone has given someone else a cookie if someone mentions someone else
         else message.channel.send("Who do you want to send a cookie to? :cookie: (Correct usage: *cookie @username)") // sends the error message if no-one is mentioned
     }
     if (command == "roll") {
-      let rand = Math.floor(Math.random() * 100);
-      let winningNum = config.winning;
-      if (rand >= winningNum) {
+      let rand = Math.floor(Math.random() * 100); // Flooring the random number and multiplying it by 100. Multiplied because it's a decimal and it's chance.
+      let winningNum = config.winning; // getting the needed number for winning
+      if (rand >= winningNum) { // if the random number is greater than the needed winning number
         message.reply(`**Roll**\nYou rolled a ${rand}; Victory!`);
-      }else{
+      }else{ // if not
         message.reply(`**Roll**\nYou rolled a ${rand}; Loss!`);
       }
     }
-    if (command == "8ball") { // creates the command 8ball
+    if (command == "8ball") { 
         if (args[1] != null) message.reply(eightball[Math.floor(Math.random() * eightball.length).toString(16)]); // if args[1], post random answer
         else message.channel.send("You haven't specified a question.  (Correct usage: *8ball [question])"); // if not, error
     }
 
-    if (command == "say") { // creates command say
+    if (command == "say") {
         if (!message.member.roles.some(r=>["bot-admin"].includes(r.name) || !message.member.hasPermission("ADMINISTRATOR"))) return message.reply("Sorry, you do not have the permission to do this!");
         var sayMessage = message.content.substring(4)
         message.delete().catch(O_o=>{});
@@ -121,7 +120,7 @@ client.on('message', message => {
         }).catch(console.error);
     }
 
-    if (command == "mute") { // creates the command mute
+    if (command == "mute") { 
         if (!message.member.roles.some(r=>["bot-admin"].includes(r.name)) ) return message.reply("Sorry, you do not have the permission to do this!"); // if author has no perms
         var mutedmember = message.mentions.members.first(); // sets the mentioned user to the var kickedmember
         if (!mutedmember) return message.reply("Please mention a valid member of this server!") // if there is no kickedmmeber var
@@ -135,7 +134,7 @@ client.on('message', message => {
         message.reply(`${mutedmember.user} has been muted by ${message.author} because: ${mutereason}`); // sends a message saying he was kicked
     }
 
-    if (command == "unmute") { // creates the command unmute
+    if (command == "unmute") {
         if (!message.member.roles.some(r=>["bot-admin"].includes(r.name)) ) return message.reply("Sorry, you do not have the permission to do this!"); // if author has no perms
         var unmutedmember = message.mentions.members.first(); // sets the mentioned user to the var kickedmember
         if (!unmutedmember) return message.reply("Please mention a valid member of this server!") // if there is no kickedmmeber var
@@ -144,7 +143,7 @@ client.on('message', message => {
         message.reply(`${unmutedmember.user} has been unmuted by ${message.author}!`); // sends a message saying he was kicked
     }
 
-    if (command == "kick") { // creates the command kick
+    if (command == "kick") { 
         if (!message.member.roles.some(r=>["bot-admin"].includes(r.name)) ) return message.reply("Sorry, you do not have the permission to do this!"); // if author has no perms
         var kickedmember = message.mentions.members.first(); // sets the mentioned user to the var kickedmember
         if (!kickedmember) return message.reply("Please mention a valid member of this server!") // if there is no kickedmmeber var
